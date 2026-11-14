@@ -2,6 +2,8 @@
 
 Projeto final da disciplina **Automação de Testes Ágeis**, feito em grupo. Automatiza os casos de teste atribuídos ao grupo (9 dos 15 casos `CT01`–`CT15`) da aplicação [XYZ Bank](https://www.globalsqa.com/angularJs-protractor/BankingProject/#/login) (AngularJS) com **Selenium WebDriver + Python + pytest**, usando o padrão **Page Object** (em funções, sem classes).
 
+**Atividade e casos de teste:** https://vinilopes20.github.io/cesar-eta-automacao-testes-projeto/
+
 ## Índice
 
 - [1. Instalação](#1-instalação)

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Casos de Teste – XYZ Bank (Projeto Final)</title>
+<style>
+  :root{--bg:#f6f7f9;--card:#fff;--txt:#1f2328;--muted:#5b6470;--line:#e2e5ea;--accent:#f28c28;--alta:#c62828;--media:#ef6c00;--baixa:#2e7d32;--pos:#1565c0;--neg:#6a1b9a}
+  *{box-sizing:border-box}
+  body{margin:0;font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--txt)}
+  header{background:#fff;border-bottom:4px solid var(--accent);padding:28px 40px}
+  header h1{margin:0 0 4px;font-size:26px}
+  header p{margin:2px 0;color:var(--muted)}
+  main{max-width:1100px;margin:0 auto;padding:24px 40px 60px}
+  h2{font-size:20px;margin:32px 0 12px}
+  .box{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px 22px}
+  .box ul{margin:6px 0;padding-left:20px}
+  .tag{display:inline-block;padding:1px 8px;border-radius:999px;font-size:12px;font-weight:600;color:#fff;white-space:nowrap}
+  .Alta{background:var(--alta)}.Média{background:var(--media)}.Baixa{background:var(--baixa)}
+  .Positivo{background:var(--pos)}.Negativo{background:var(--neg)}
+  .mod{display:inline-block;padding:1px 8px;border-radius:999px;font-size:12px;font-weight:600;background:#eef0f3;color:var(--txt);white-space:nowrap}
+
+  .toolbar{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 18px;margin-bottom:12px}
+  .toolbar label{display:flex;flex-direction:column;font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.03em;gap:4px}
+  .toolbar select{font:inherit;font-size:14px;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:#fff;min-width:150px;text-transform:none;letter-spacing:0;color:var(--txt)}
+  .toolbar .spacer{flex:1}
+  .toolbar button{font:inherit;font-size:14px;padding:7px 14px;border-radius:8px;border:1px solid var(--line);background:#fff;cursor:pointer}
+  .toolbar button:hover{border-color:var(--accent);color:var(--accent)}
+  .toolbar button.limpar{border:none;background:none;color:var(--muted);text-decoration:underline;padding:7px 4px}
+  .contador{font-size:14px;color:var(--muted);margin:4px 2px 10px}
+
+  details.tc{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:10px;margin:8px 0;page-break-inside:avoid}
+  details.tc>summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:22px 56px 1fr auto;gap:10px;align-items:center;padding:12px 18px}
+  details.tc>summary::-webkit-details-marker{display:none}
+  details.tc>summary::before{content:"▸";color:var(--muted);transition:transform .15s}
+  details.tc[open]>summary::before{transform:rotate(90deg)}
+  details.tc>summary:hover{background:#fafbfc;border-radius:10px}
+  .id{font-weight:700;color:var(--accent)}
+  .titulo{font-weight:600}
+  .tags{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+  .corpo{padding:0 22px 18px 50px;border-top:1px solid var(--line)}
+  .corpo h4{margin:14px 0 4px;font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.03em}
+  .corpo ol,.corpo ul{margin:4px 0;padding-left:22px}
+  .corpo table{width:100%;border-collapse:collapse;font-size:14px;border:1px solid var(--line)}
+  .corpo th,.corpo td{text-align:left;padding:6px 10px;border-bottom:1px solid var(--line)}
+  .corpo th{background:#fafbfc;font-size:12px;color:var(--muted);text-transform:uppercase}
+  code{background:#f0f2f5;padding:1px 5px;border-radius:4px;font-size:13px;word-break:break-all}
+  .vazio{display:none;text-align:center;color:var(--muted);padding:24px}
+  footer{text-align:center;color:var(--muted);font-size:13px;padding:20px}
+  @media (max-width:700px){details.tc>summary{grid-template-columns:22px 50px 1fr}.tags{grid-column:2/4;justify-content:flex-start}.corpo{padding-left:22px}main,header{padding-left:16px;padding-right:16px}}
+  @media print{body{background:#fff}.toolbar,.contador{display:none}header{padding:12px 0}main{padding:0}details.tc{display:block!important}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Casos de Teste – XYZ Bank</h1>
+  <p><strong>Disciplina:</strong> Automação de Testes Ágeis &nbsp;|&nbsp; <strong>Ferramentas:</strong> Selenium WebDriver + Python</p>
+  <p><strong>Aplicação sob teste:</strong> <a href="https://www.globalsqa.com/angularJs-protractor/BankingProject/#/login" target="_blank">https://www.globalsqa.com/angularJs-protractor/BankingProject/#/login</a> (AngularJS)</p>
+</header>
+<main>
+
+<h2>Instruções</h2>
+<div class="box">
+  <ul>
+    <li>O projeto deverá ser implementado <strong>em grupo</strong>.</li>
+    <li>Utilizar o padrão de projeto <strong>Page Objects</strong>.</li>
+    <li>Implementar <strong>no mínimo 3 testes por pessoa</strong>.</li>
+    <li>Implementar os testes usando <strong>Python + Selenium</strong>.</li>
+    <li>Serão avaliados:
+      <ul>
+        <li>Funcionamento correto dos testes;</li>
+        <li>Qualidade dos testes criados;</li>
+        <li>Qualidade do código implementado;</li>
+        <li>Boas práticas de programação.</li>
+      </ul>
+    </li>
+    <li>Estarei disponível para dúvidas e suporte.</li>
+  </ul>
+</div>
+
+<h2>Dicas</h2>
+<div class="box">
+  <ul>
+    <li><strong>Acesso sem senha:</strong> para entrar como gerente, clique em <em>Bank Manager Login</em>. Para entrar como cliente, clique em <em>Customer Login</em>, selecione o nome em <em>Your Name</em> e clique em <em>Login</em>. O botão <em>Login</em> só aparece depois da seleção do nome.</li>
+    <li><strong>Os dados ficam no navegador</strong> (<code>localStorage</code>), não em um servidor. Um navegador novo começa sempre com os mesmos dados: 5 clientes (Hermoine Granger, Harry Potter, Ron Weasly, Albus Dumbledore e Neville Longbottom) e as contas 1001 a 1015. Por isso, abra um navegador novo para cada teste. Para voltar aos dados iniciais no mesmo navegador, execute <code>driver.execute_script("window.localStorage.clear()")</code> e depois <code>driver.refresh()</code>.</li>
+    <li><strong>Não recarregue a página no meio de um teste.</strong> Use os botões da aplicação (<em>Home</em>, <em>Back</em>, abas do gerente). Depois de um recarregamento, o saldo de uma conta pode voltar ao valor anterior.</li>
+    <li><strong>Alertas JavaScript:</strong> <em>Add Customer</em> e <em>Open Account</em> mostram a resposta em um <code>alert</code>. Espere o alerta com <code>EC.alert_is_present()</code>, leia o texto com <code>driver.switch_to.alert.text</code> e feche com <code>accept()</code>. Enquanto o alerta está aberto, outros comandos geram <code>UnexpectedAlertPresentException</code>.</li>
+    <li>O número do cliente e o número da conta são gerados em sequência. Não fixe esses valores no código: leia o número no texto do alerta.</li>
+    <li>Os campos de seleção (<em>Your Name</em>, <em>Customer</em>, <em>Currency</em> e a conta do cliente) são <code>&lt;select&gt;</code> nativos. Você pode usar a classe <code>Select</code> do Selenium.</li>
+    <li>A aplicação usa AngularJS e atualiza a tela sem recarregar a página. Use <strong>esperas explícitas</strong> (<code>WebDriverWait</code> + <code>expected_conditions</code>), por exemplo, espere o texto do saldo mudar depois de um depósito. Evite <code>time.sleep()</code>.</li>
+    <li>As URLs têm <code>#</code> (por exemplo, <code>…/BankingProject/#/manager/addCust</code>). Compare a URL completa, com o <code>#</code>.</li>
+    <li>Os títulos das colunas da lista de clientes são links com <code>href="#"</code>. Depois de um clique para ordenar, a URL muda para <code>…/BankingProject/#</code>, mas a tela continua a mesma.</li>
+    <li>O extrato mostra as datas no fuso horário do navegador. Os campos de data do filtro são do tipo <code>datetime-local</code>, e o formato de digitação depende do idioma do navegador. Se <code>send_keys</code> não funcionar, preencha o campo com JavaScript e dispare os eventos <code>input</code> e <code>change</code>.</li>
+  </ul>
+</div>
+
+<h2>Casos de teste</h2>
+<div class="toolbar">
+  <label>Módulo<select id="fModulo"></select></label>
+  <label>Tipo<select id="fTipo"></select></label>
+  <label>Prioridade<select id="fPrioridade"></select></label>
+  <button class="limpar" id="limpar" type="button">Limpar filtros</button>
+  <span class="spacer"></span>
+  <button id="expandir" type="button">Expandir tudo</button>
+  <button id="colapsar" type="button">Colapsar tudo</button>
+</div>
+<div class="contador" id="contador"></div>
+<div id="cases"></div>
+<div class="vazio" id="vazio">Nenhum caso de teste encontrado para os filtros selecionados.</div>
+
+</main>
+<footer>Casos de teste para o projeto final – Automação de Testes Ágeis</footer>
+
+<script>
+const U = p => `<code>https://www.globalsqa.com/angularJs-protractor/BankingProject/#${p}</code>`;
+const NOVO = "Navegador novo, com os dados iniciais da aplicação.";
+const GERENTE = "Área do gerente aberta (<em>Bank Manager Login</em>), URL "+U("/manager")+".";
+const cliente = (nome) => `Cliente <strong>${nome}</strong> conectado (<em>Customer Login</em> &gt; ${nome} &gt; <em>Login</em>), URL ${U("/account")}.`;
+const casos = [
+{
+  id:"CT01", titulo:"Cadastrar novo cliente", modulo:"Gerente", tipo:"Positivo", prioridade:"Alta",
+  objetivo:"Verificar que o gerente cadastra um cliente e que o cliente aparece na lista.",
+  pre:[NOVO, GERENTE],
+  dados:[["First Name","Aluno"],["Last Name","QA"],["Post Code","50000"]],
+  passos:["Clicar em <em>Add Customer</em>.","Verificar a URL da página.","Preencher <em>First Name</em>, <em>Last Name</em> e <em>Post Code</em>.","Clicar no botão <em>Add Customer</em> do formulário.","Ler e fechar o alerta.","Clicar em <em>Customers</em> e procurar o cliente na lista."],
+  esperado:["No passo 2, a URL é "+U("/manager/addCust")+".","O alerta exibe <strong>Customer added successfully with customer id :</strong> seguido de um número (6 em um navegador novo).","Depois do alerta, os campos do formulário ficam vazios.","A lista de clientes exibe <strong>Aluno QA</strong> com o Post Code <strong>50000</strong>."]
+},
+{
+  id:"CT02", titulo:"Abrir conta para um cliente", modulo:"Gerente", tipo:"Positivo", prioridade:"Alta",
+  objetivo:"Verificar a abertura de uma conta e a associação da conta ao cliente.",
+  pre:[NOVO, GERENTE],
+  dados:[["Customer","Harry Potter"],["Currency","Dollar"]],
+  passos:["Clicar em <em>Open Account</em>.","Verificar a URL da página.","Selecionar o cliente e a moeda.","Clicar em <em>Process</em>.","Ler e fechar o alerta.","Clicar em <em>Customers</em> e ler a coluna <em>Account Number</em> de Harry Potter."],
+  esperado:["No passo 2, a URL é "+U("/manager/openAccount")+".","O alerta exibe <strong>Account created successfully with account Number :</strong> seguido de um número (1016 em um navegador novo).","A coluna <em>Account Number</em> de Harry Potter exibe <strong>1004 1005 1006</strong> e o número novo do alerta."]
+},
+{
+  id:"CT03", titulo:"Pesquisar clientes na lista", modulo:"Gerente", tipo:"Positivo", prioridade:"Média",
+  objetivo:"Verificar que a pesquisa filtra a lista de clientes por qualquer coluna.",
+  pre:[NOVO, GERENTE],
+  dados:[["Search Customer","E55"]],
+  passos:["Clicar em <em>Customers</em>.","Verificar a URL da página.","Digitar <code>E55</code> no campo <em>Search Customer</em>.","Apagar o texto do campo."],
+  esperado:["No passo 2, a URL é "+U("/manager/list")+".","No passo 3, somente 2 clientes são exibidos: <strong>Ron Weasly</strong> (E55555) e <strong>Albus Dumbledore</strong> (E55656). A pesquisa encontra o texto no <em>Post Code</em>.","No passo 4, os 5 clientes aparecem outra vez."]
+},
+{
+  id:"CT04", titulo:"Ordenar clientes pelo primeiro nome", modulo:"Gerente", tipo:"Positivo", prioridade:"Baixa",
+  objetivo:"Verificar a ordenação da lista de clientes pela coluna First Name.",
+  pre:[NOVO, GERENTE,"Lista de clientes aberta (<em>Customers</em>), URL "+U("/manager/list")+"."],
+  dados:[],
+  passos:["Clicar no título da coluna <em>First Name</em>.","Coletar os valores da coluna <em>First Name</em>.","Clicar outra vez no título da coluna <em>First Name</em>.","Coletar os valores da coluna <em>First Name</em> outra vez."],
+  esperado:["No passo 2, a ordem é decrescente (Z–A): <strong>Ron, Neville, Hermoine, Harry, Albus</strong>.","No passo 4, a ordem é crescente (A–Z): <strong>Albus, Harry, Hermoine, Neville, Ron</strong>."]
+},
+{
+  id:"CT05", titulo:"Excluir cliente", modulo:"Gerente", tipo:"Positivo", prioridade:"Média",
+  objetivo:"Verificar que o cliente excluído sai da lista de clientes.",
+  pre:[NOVO, GERENTE,"Cliente <strong>Aluno QA</strong> cadastrado no setup (como no CT01)."],
+  dados:[["Search Customer","Aluno"]],
+  passos:["Clicar em <em>Customers</em>.","Digitar <code>Aluno</code> no campo <em>Search Customer</em>.","Clicar em <em>Delete</em> na linha do cliente."],
+  esperado:["No passo 2, somente a linha de <strong>Aluno QA</strong> é exibida.","No passo 3, a linha é removida e a tabela fica vazia (o sistema não pede confirmação).","A URL continua "+U("/manager/list")+"."]
+},
+{
+  id:"CT06", titulo:"Movimentar somente a conta selecionada", modulo:"Cliente", tipo:"Positivo", prioridade:"Alta",
+  objetivo:"Verificar que cada conta tem a sua moeda e que um depósito altera somente a conta selecionada.",
+  pre:[NOVO, cliente("Harry Potter")],
+  dados:[["Conta","1005"],["Valor do depósito","300"]],
+  passos:["Selecionar cada conta (1004, 1005 e 1006) e ler a linha de informações.","Selecionar a conta <code>1005</code>.","Clicar em <em>Deposit</em>, digitar <code>300</code> e clicar no botão <em>Deposit</em>.","Selecionar as contas 1004 e 1006 e ler o saldo."],
+  esperado:["No passo 1, as contas exibem as moedas <strong>1004 – Dollar</strong>, <strong>1005 – Pound</strong> e <strong>1006 – Rupee</strong>, todas com <em>Balance</em> 0.","No passo 3, a conta 1005 exibe <strong>Account Number : 1005 , Balance : 300 , Currency : Pound</strong>.","No passo 4, as contas 1004 e 1006 continuam com <em>Balance</em> <strong>0</strong>."]
+},
+{
+  id:"CT07", titulo:"Depositar valor na conta", modulo:"Cliente", tipo:"Positivo", prioridade:"Alta",
+  objetivo:"Verificar que o depósito aumenta o saldo e mostra a mensagem de sucesso.",
+  pre:[NOVO, cliente("Harry Potter"),"Conta 1004 selecionada, com <em>Balance</em> 0."],
+  dados:[["Amount to be Deposited","500"]],
+  passos:["Clicar em <em>Deposit</em>.","Digitar <code>500</code> em <em>Amount to be Deposited</em>.","Clicar no botão <em>Deposit</em> do formulário."],
+  esperado:["A mensagem <strong>Deposit Successful</strong> é exibida.","A linha de informações exibe <strong>Account Number : 1004 , Balance : 500 , Currency : Dollar</strong>.","O campo do valor fica vazio.","A URL continua "+U("/account")+"."]
+},
+{
+  id:"CT08", titulo:"Impedir saque maior que o saldo", modulo:"Cliente", tipo:"Negativo", prioridade:"Alta",
+  objetivo:"Verificar que o sistema recusa um saque acima do saldo e não altera a conta.",
+  pre:[NOVO, cliente("Harry Potter"),"Depósito de 500 na conta 1004 feito no setup (saldo 500)."],
+  dados:[["Amount to be Withdrawn","800"]],
+  passos:["Clicar em <em>Withdrawl</em>.","Digitar <code>800</code> em <em>Amount to be Withdrawn</em>.","Clicar no botão <em>Withdraw</em>.","Clicar em <em>Transactions</em>."],
+  esperado:["A mensagem <strong>Transaction Failed. You can not withdraw amount more than the balance.</strong> é exibida.","O saldo continua <strong>500</strong>.","No extrato, não há uma transação <em>Debit</em> de 800."]
+},
+{
+  id:"CT09", titulo:"Registrar depósito e saque no extrato", modulo:"Extrato", tipo:"Positivo", prioridade:"Alta",
+  objetivo:"Verificar que o extrato mostra as transações feitas na conta.",
+  pre:[NOVO, cliente("Harry Potter"),"Conta 1004 selecionada, sem transações."],
+  dados:[["Depósito","500"],["Saque","200"]],
+  passos:["Fazer um depósito de <code>500</code>.","Clicar em <em>Withdrawl</em>, digitar <code>200</code> e clicar em <em>Withdraw</em>.","Clicar em <em>Transactions</em>."],
+  esperado:["No passo 2, a mensagem <strong>Transaction successful</strong> é exibida e o saldo é <strong>300</strong>.","No passo 3, a URL é "+U("/listTx")+".","O extrato tem 2 linhas: <strong>500 Credit</strong> e <strong>200 Debit</strong>, com a data de hoje na coluna <em>Date-Time</em>."]
+},
+{
+  id:"CT10", titulo:"Filtrar o extrato por período", modulo:"Extrato", tipo:"Positivo", prioridade:"Média",
+  objetivo:"Verificar que o filtro de datas mostra somente as transações do período.",
+  pre:[NOVO, cliente("Hermoine Granger"),"Conta 1001 selecionada (ela já tem transações de 2015).","Extrato aberto (<em>Transactions</em>), URL "+U("/listTx")+"."],
+  dados:[["Start","2 de janeiro de 2015, 00:00"],["End","3 de janeiro de 2015, 23:59"]],
+  passos:["Preencher a data inicial.","Preencher a data final.","Coletar as linhas do extrato."],
+  esperado:["O extrato exibe somente 4 linhas: <strong>Jan 2, 2015 – 30 Credit</strong>, <strong>Jan 2, 2015 – 4 Debit</strong>, <strong>Jan 3, 2015 – 30 Credit</strong> e <strong>Jan 3, 2015 – 4 Debit</strong>.","Nenhuma linha tem data fora do período."]
+},
+{
+  id:"CT11", titulo:"Limpar as transações (Reset)", modulo:"Extrato", tipo:"Positivo", prioridade:"Média",
+  objetivo:"Verificar que o botão Reset apaga o extrato e zera o saldo da conta.",
+  pre:[NOVO, cliente("Harry Potter"),"Depósito de 500 na conta 1004 feito no setup."],
+  dados:[],
+  passos:["Clicar em <em>Transactions</em>.","Clicar em <em>Reset</em>.","Clicar em <em>Back</em>."],
+  esperado:["No passo 2, a tabela do extrato fica vazia.","No passo 3, a URL é "+U("/account")+".","A linha de informações exibe <strong>Account Number : 1004 , Balance : 0 , Currency : Dollar</strong>."]
+},
+{
+  id:"CT12", titulo:"Manter a conta selecionada ao voltar do extrato", modulo:"Navegação", tipo:"Positivo", prioridade:"Baixa",
+  objetivo:"Verificar que o extrato e o botão Back usam a conta selecionada.",
+  pre:[NOVO, cliente("Harry Potter"),"Depósito de 300 na conta 1005 feito no setup."],
+  dados:[["Conta","1005"]],
+  passos:["Selecionar a conta <code>1005</code>.","Clicar em <em>Transactions</em>.","Clicar em <em>Back</em>."],
+  esperado:["No passo 2, o extrato exibe somente a transação da conta 1005: <strong>300 Credit</strong>.","No passo 3, a URL é "+U("/account")+".","A conta selecionada continua <strong>1005</strong>, com <strong>Balance : 300</strong> e <strong>Currency : Pound</strong>."]
+},
+{
+  id:"CT13", titulo:"Voltar à tela inicial com o botão Home", modulo:"Navegação", tipo:"Positivo", prioridade:"Baixa",
+  objetivo:"Verificar que o botão Home leva à tela inicial a partir da área do cliente.",
+  pre:[NOVO, cliente("Harry Potter")],
+  dados:[],
+  passos:["Clicar no botão <em>Home</em> do cabeçalho."],
+  esperado:["A URL é "+U("/login")+".","Os botões <strong>Customer Login</strong> e <strong>Bank Manager Login</strong> são exibidos."]
+},
+{
+  id:"CT14", titulo:"Novo cliente acessa a conta aberta pelo gerente", modulo:"Integração", tipo:"Positivo", prioridade:"Alta",
+  objetivo:"Verificar o fluxo completo entre o gerente e o cliente.",
+  pre:[NOVO, GERENTE],
+  dados:[["First Name / Last Name","Aluno / QA"],["Post Code","50000"],["Currency","Pound"]],
+  passos:["Cadastrar o cliente <em>Aluno QA</em> em <em>Add Customer</em> e fechar o alerta.","Em <em>Open Account</em>, abrir uma conta em <em>Pound</em> para <em>Aluno QA</em>. Guardar o número da conta do alerta e fechar o alerta.","Clicar em <em>Home</em> e depois em <em>Customer Login</em>.","Selecionar <em>Aluno QA</em> e clicar em <em>Login</em>."],
+  esperado:["A URL é "+U("/account")+".","A mensagem <strong>Welcome Aluno QA !!</strong> é exibida.","A linha de informações exibe o número da conta do passo 2, <strong>Balance : 0</strong> e <strong>Currency : Pound</strong>."]
+},
+{
+  id:"CT15", titulo:"Cliente sem conta recebe aviso", modulo:"Cliente", tipo:"Negativo", prioridade:"Média",
+  objetivo:"Verificar que um cliente sem conta não vê as operações bancárias.",
+  pre:[NOVO,"Cliente <strong>Sem Conta</strong> (Post Code 123) cadastrado pelo gerente no setup, sem abrir conta."],
+  dados:[["Your Name","Sem Conta"]],
+  passos:["Na tela inicial, clicar em <em>Customer Login</em>.","Selecionar <em>Sem Conta</em> e clicar em <em>Login</em>."],
+  esperado:["A URL é "+U("/account")+".","A página exibe <strong>Welcome Sem Conta !!</strong> e <strong>Please open an account with us.</strong>","Os botões <em>Transactions</em>, <em>Deposit</em> e <em>Withdrawl</em> não são exibidos."]
+}
+];
+
+const lista = (arr, tag) => `<${tag}>${arr.map(i=>`<li>${i}</li>`).join("")}</${tag}>`;
+document.getElementById("cases").innerHTML = casos.map(c => `
+<details class="tc" id="${c.id}" data-modulo="${c.modulo}" data-tipo="${c.tipo}" data-prioridade="${c.prioridade}">
+  <summary>
+    <span class="id">${c.id}</span>
+    <span class="titulo">${c.titulo}</span>
+    <span class="tags"><span class="mod">${c.modulo}</span><span class="tag ${c.tipo}">${c.tipo}</span><span class="tag ${c.prioridade}">${c.prioridade}</span></span>
+  </summary>
+  <div class="corpo">
+    <p><strong>Objetivo:</strong> ${c.objetivo}</p>
+    <h4>Pré-condições</h4>${lista(c.pre,"ul")}
+    ${c.dados.length ? `<h4>Dados de teste</h4><table><thead><tr><th>Campo</th><th>Valor</th></tr></thead><tbody>${c.dados.map(d=>`<tr><td>${d[0]}</td><td>${d[1]}</td></tr>`).join("")}</tbody></table>` : ""}
+    <h4>Passos</h4>${lista(c.passos,"ol")}
+    <h4>Resultado esperado</h4>${lista(c.esperado,"ul")}
+  </div>
+</details>`).join("");
+
+const filtros = {modulo:"fModulo", tipo:"fTipo", prioridade:"fPrioridade"};
+const ordemPrioridade = ["Alta","Média","Baixa"];
+for (const [campo, id] of Object.entries(filtros)) {
+  let valores = [...new Set(casos.map(c=>c[campo]))];
+  if (campo==="prioridade") valores = ordemPrioridade.filter(v=>valores.includes(v));
+  document.getElementById(id).innerHTML = `<option value="">Todos</option>` + valores.map(v=>`<option>${v}</option>`).join("");
+  document.getElementById(id).addEventListener("change", aplicar);
+}
+const itens = () => [...document.querySelectorAll("details.tc")];
+const visiveis = () => itens().filter(d=>d.style.display!=="none");
+function aplicar(){
+  const sel = Object.fromEntries(Object.entries(filtros).map(([k,id])=>[k,document.getElementById(id).value]));
+  let n = 0;
+  itens().forEach(d=>{
+    const ok = Object.entries(sel).every(([k,v])=>!v || d.dataset[k]===v);
+    d.style.display = ok ? "" : "none"; if(ok) n++;
+  });
+  document.getElementById("contador").textContent = `Exibindo ${n} de ${casos.length} casos de teste`;
+  document.getElementById("vazio").style.display = n ? "none" : "block";
+}
+document.getElementById("limpar").onclick = () => { Object.values(filtros).forEach(id=>document.getElementById(id).value=""); aplicar(); };
+document.getElementById("expandir").onclick = () => visiveis().forEach(d=>d.open=true);
+document.getElementById("colapsar").onclick = () => itens().forEach(d=>d.open=false);
+window.addEventListener("beforeprint", () => itens().forEach(d=>d.open=true));
+aplicar();
+</script>
+</body>
+</html>
