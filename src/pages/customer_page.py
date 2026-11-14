@@ -10,6 +10,7 @@ DEPOSIT_TAB = by_css("button[ng-click='deposit()']")
 AMOUNT_INPUT = by_css("input[ng-model='amount']")
 SUBMIT_AMOUNT_BUTTON = by_css("form button[type='submit']")
 MESSAGE = by_css("span.error")
+HOME_BUTTON = by_css("button[ng-click='home()']")
 
 
 def select_account(driver, account):
@@ -18,6 +19,10 @@ def select_account(driver, account):
 
 def click_transactions_tab(driver):
     click(driver, TRANSACTIONS_TAB)
+
+
+def click_home_button(driver):
+    click(driver, HOME_BUTTON)
 
 
 def deposit(driver, amount):
