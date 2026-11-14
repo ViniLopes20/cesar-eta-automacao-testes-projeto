@@ -1,0 +1,48 @@
+name: Testes E2E - XYZ Bank
+
+run-name: >-
+  XYZ Bank - ${{ github.event_name == 'pull_request'
+  && format('PR #{0}', github.event.pull_request.number)
+  || format('execução manual por {0}', github.actor) }}
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: testes-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  testes:
+    name: XYZ Bank - Testes E2E (Chrome)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    env:
+      HEADLESS: "true"
+    steps:
+      - name: Baixar o código
+        uses: actions/checkout@v4
+
+      - name: Instalar o Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Instalar as dependências
+        run: pip install -r requirements.txt
+
+      - name: Rodar os testes E2E
+        run: pytest
+
+      - name: Salvar o relatório HTML
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: relatorio-testes
+          path: reports/
+          if-no-files-found: ignore
