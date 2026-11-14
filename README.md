@@ -159,7 +159,7 @@ O projeto não usa classes: tudo são **funções** que recebem o `driver` (o Ch
    - nome da função: `test_ct<número>_<descrição_em_português>`, com o código do caso em minúsculo (ex.: `test_ct10_filtrar_extrato_por_periodo`). Assim dá para achar o caso com `pytest -k ct10` ou `git grep -i ct10`, e o nome aparece no relatório;
    - marcadores de **módulo** (`gerente`, `cliente`, `extrato`, `navegacao`), **tipo** (`positivo`, `negativo`) e **prioridade** (`alta`, `media`, `baixa`), iguais aos do caso;
    - cada verificação comprova uma regra do caso; as funções `verify_*` já mostram o valor esperado e o atual quando falham.
-5. **Rode seu teste** (com a janela aberta e depois sem janela, com `HEADLESS`) e **duas vezes seguidas**, para detectar instabilidade.
+5. **Rode seu teste** (com a janela aberta e depois sem janela, veja [como](#com-janela-ou-sem-janela-headless)) e **duas vezes seguidas**, para detectar instabilidade.
 6. **Abra um Pull Request** pequeno para a `main`.
 
 ### Cuidados com este site
@@ -189,9 +189,21 @@ pytest                                  # todos
 pytest tests/manager                    # um módulo
 pytest tests/customer/test_deposit.py   # um arquivo
 pytest -m "alta and positivo"           # por marcador
-pytest -k deposito                      # por nome
-HEADLESS=true pytest                    # sem abrir a janela (macOS)
-$env:HEADLESS="true"; pytest            # sem abrir a janela (Windows PowerShell)
+pytest -k ct10                          # por nome (ex.: o código do caso)
 ```
+
+### Com janela ou sem janela (headless)
+
+```bash
+pytest                                  # com janela: abre o Chrome (padrão)
+
+HEADLESS=true pytest                    # sem janela (macOS)
+$env:HEADLESS="true"; pytest            # sem janela (Windows PowerShell)
+set HEADLESS=true && pytest             # sem janela (Windows cmd)
+```
+
+Sem a variável `HEADLESS`, o teste abre o Chrome com janela, bom para acompanhar o que acontece. Use sem janela quando só quiser o resultado, como no CI.
+
+Se você definiu `HEADLESS=true` no terminal, ele continua sem janela nas próximas execuções daquela sessão. Para voltar a abrir a janela, rode `unset HEADLESS` (macOS) ou `Remove-Item Env:HEADLESS` (PowerShell), ou abra um terminal novo. No `cmd`, use `set HEADLESS=`.
 
 Relatório HTML em `reports/report.html`.
