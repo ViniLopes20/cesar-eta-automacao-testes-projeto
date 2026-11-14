@@ -4,7 +4,7 @@ from src.interface.actions_interface import (
     find,
     find_all,
     get_text,
-    open_page,
+    navigate_to,
     select_option,
     type_text,
 )
@@ -26,7 +26,7 @@ __all__ = [
     "find",
     "find_all",
     "get_text",
-    "open_page",
+    "navigate_to",
     "select_option",
     "type_text",
     "verify_count",

@@ -146,7 +146,7 @@ O projeto não usa classes: tudo são **funções** que recebem o `driver` (o Ch
    @pytest.mark.positivo
    @pytest.mark.alta
    def test_depositar_valor_na_conta(driver):
-       home_page.load(driver)
+       home_page.open_home_page(driver)
        home_page.login_as_customer(driver, "Harry Potter")
 
        customer_page.deposit(driver, "500")

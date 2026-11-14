@@ -8,7 +8,7 @@ from src.pages import customer_page, home_page
 @pytest.mark.positivo
 @pytest.mark.alta
 def test_login_como_cliente(driver):
-    home_page.load(driver)
+    home_page.open_home_page(driver)
 
     home_page.login_as_customer(driver, "Harry Potter")
 

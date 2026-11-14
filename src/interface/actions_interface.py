@@ -8,7 +8,7 @@ def wait_for(driver, condition):
     return WebDriverWait(driver, settings.TIMEOUT).until(condition)
 
 
-def open_page(driver, path):
+def navigate_to(driver, path):
     driver.get(settings.url(path))
 
 
