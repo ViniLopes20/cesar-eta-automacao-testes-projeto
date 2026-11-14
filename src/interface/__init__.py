@@ -6,12 +6,14 @@ from src.interface.actions_interface import (
     get_text,
     navigate_to,
     select_option,
+    set_input_value,
     type_text,
 )
 from src.interface.expect_interface import (
     verify_count,
     verify_not_visible,
     verify_text,
+    verify_texts,
     verify_url,
     verify_visible,
 )
@@ -28,10 +30,12 @@ __all__ = [
     "get_text",
     "navigate_to",
     "select_option",
+    "set_input_value",
     "type_text",
     "verify_count",
     "verify_not_visible",
     "verify_text",
+    "verify_texts",
     "verify_url",
     "verify_visible",
 ]

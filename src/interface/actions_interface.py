@@ -34,6 +34,17 @@ def get_text(driver, locator):
     return find(driver, locator).text.strip()
 
 
+def set_input_value(driver, locator, value):
+    campo = find(driver, locator)
+    driver.execute_script(
+        "arguments[0].value = arguments[1];"
+        "arguments[0].dispatchEvent(new Event('input', {bubbles: true}));"
+        "arguments[0].dispatchEvent(new Event('change', {bubbles: true}));",
+        campo,
+        value,
+    )
+
+
 def select_option(driver, locator, text):
     Select(find(driver, locator)).select_by_visible_text(text)
 
