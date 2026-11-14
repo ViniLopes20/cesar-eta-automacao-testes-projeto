@@ -145,7 +145,7 @@ O projeto não usa classes: tudo são **funções** que recebem o `driver` (o Ch
    @pytest.mark.cliente
    @pytest.mark.positivo
    @pytest.mark.alta
-   def test_depositar_valor_na_conta(driver):
+   def test_ct07_depositar_valor_na_conta(driver):
        home_page.open_home_page(driver)
        home_page.login_as_customer(driver, "Harry Potter")
 
@@ -154,7 +154,7 @@ O projeto não usa classes: tudo são **funções** que recebem o `driver` (o Ch
        customer_page.verify_message(driver, "Deposit Successful")
    ```
 
-   - nome da função em português, descritivo;
+   - nome da função: `test_ct<número>_<descrição_em_português>`, com o código do caso em minúsculo (ex.: `test_ct10_filtrar_extrato_por_periodo`). Assim dá para achar o caso com `pytest -k ct10` ou `git grep -i ct10`, e o nome aparece no relatório;
    - marcadores de **módulo** (`gerente`, `cliente`, `extrato`, `navegacao`), **tipo** (`positivo`, `negativo`) e **prioridade** (`alta`, `media`, `baixa`), iguais aos do caso;
    - cada verificação comprova uma regra do caso; as funções `verify_*` já mostram o valor esperado e o atual quando falham.
 5. **Rode seu teste** (com a janela aberta e depois sem janela, com `HEADLESS`) e **duas vezes seguidas**, para detectar instabilidade.
