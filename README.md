@@ -102,7 +102,7 @@ O projeto não usa classes: tudo são **funções** que recebem o `driver` (o Ch
 
 | Camada | O que tem | Regra |
 | --- | --- | --- |
-| `src/interface/` | **Ações** (`click`, `type_text`, `select_option`, `get_text`, `accept_alert`), **locators** (`by_id`, `by_css`, `by_xpath`) e **verificações** (`verify_url`, `verify_text`, `verify_visible`, `verify_not_visible`, `verify_count`). Todas já esperam a tela atualizar. | Use sempre estas funções; não use `By` nem `driver.find_element` direto. |
+| `src/interface/` | **Ações** (`click`, `type_text`, `select_option`, `get_text`, `get_alert_text_and_accept`), **locators** (`by_id`, `by_css`, `by_xpath`) e **verificações** (`verify_url`, `verify_text`, `verify_visible`, `verify_not_visible`, `verify_count`). Todas já esperam a tela atualizar. | Use sempre estas funções; não use `By` nem `driver.find_element` direto. |
 | `src/pages/` | Um arquivo por tela, com os **locators** (constantes), as **ações** e as **verificações** da tela | Importa só de `src.interface`. Para verificar, use as funções `verify_*` da interface; função de ação não tem `assert`. |
 | `tests/` | O teste: chama as funções das pages e valida com as funções `verify_*` (da interface ou das pages) | Não usa `By`, nem `driver.find_element`. |
 
@@ -163,7 +163,7 @@ O projeto não usa classes: tudo são **funções** que recebem o `driver` (o Ch
 ### Cuidados com este site
 
 - **Esperas explícitas** (`WebDriverWait` + `expected_conditions`), nunca `time.sleep()`: o AngularJS atualiza a tela sem recarregar. Depois de depositar, ordenar, filtrar ou excluir, espere o resultado antes de ler.
-- **Alertas JavaScript** (*Add Customer* e *Open Account*): use `accept_alert(driver)`; ele espera, devolve o texto e fecha.
+- **Alertas JavaScript** (*Add Customer* e *Open Account*): use `get_alert_text_and_accept(driver)`; ele espera, devolve o texto e fecha.
 - **Não fixe** número de cliente/conta no código: leia do texto do alerta.
 - **Não recarregue a página** no meio do teste; use os botões da aplicação (Home, Back, abas).
 - As URLs têm `#`: compare a URL completa, usando `settings.url("/manager/addCust")`.

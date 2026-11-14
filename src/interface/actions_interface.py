@@ -38,7 +38,7 @@ def select_option(driver, locator, text):
     Select(find(driver, locator)).select_by_visible_text(text)
 
 
-def accept_alert(driver):
+def get_alert_text_and_accept(driver):
     alerta = wait_for(driver, EC.alert_is_present())
     texto = alerta.text
     alerta.accept()

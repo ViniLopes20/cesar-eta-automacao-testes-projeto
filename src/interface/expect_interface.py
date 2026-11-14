@@ -13,7 +13,7 @@ def wait_until(driver, check):
         return False
 
 
-def current_text(driver, locator):
+def get_text_if_present(driver, locator):
     elementos = find_all(driver, locator)
     return elementos[0].text.strip() if elementos else None
 
@@ -26,8 +26,8 @@ def verify_url(driver, path):
 
 
 def verify_text(driver, locator, expected):
-    assert wait_until(driver, lambda d: current_text(d, locator) == expected), (
-        f"Texto esperado '{expected}', mas está '{current_text(driver, locator)}'"
+    assert wait_until(driver, lambda d: get_text_if_present(d, locator) == expected), (
+        f"Texto esperado '{expected}', mas está '{get_text_if_present(driver, locator)}'"
     )
 
 

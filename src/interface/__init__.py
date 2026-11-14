@@ -1,8 +1,8 @@
 from src.interface.actions_interface import (
-    accept_alert,
     click,
     find,
     find_all,
+    get_alert_text_and_accept,
     get_text,
     navigate_to,
     select_option,
@@ -18,13 +18,13 @@ from src.interface.expect_interface import (
 from src.interface.locators_interface import by_css, by_id, by_xpath
 
 __all__ = [
-    "accept_alert",
     "by_css",
     "by_id",
     "by_xpath",
     "click",
     "find",
     "find_all",
+    "get_alert_text_and_accept",
     "get_text",
     "navigate_to",
     "select_option",
